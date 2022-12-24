@@ -3,8 +3,9 @@
 
 pragma solidity >=0.8.17 <0.9.0;
 import "./utils.sol";
+import "./group.sol";
 
-contract User is utils {
+contract User is utils, Group {
     uint256 internal userId;
 
     struct user {
@@ -20,7 +21,6 @@ contract User is utils {
         public
         virtual
     {
-        // user memory u = user(++userId, msg.sender, block.timestamp, desc);
         user storage u = userMap[msg.sender];
         if (u.index > 0) {
             if (bytes(desc).length != 0) {
@@ -44,11 +44,17 @@ contract User is utils {
 
     event friend(address from, address to);
 
-    modifier onlyFriend(address to) {
+    modifier onlyFriendorInGroup(address to) {
         require(
-            3 == friendMap[shaAddress(to, msg.sender)],
-            "Only friends can chat"
+            3 == friendMap[shaAddress(to, msg.sender)] ||
+                inGroup(msg.sender, to),
+            "Only friends or group member can send message"
         );
+        _;
+    }
+
+    modifier onlyOwnerOrInGroup(address addr) {
+        require(msg.sender == addr || inGroup(msg.sender, addr), "must be owner or group member");
         _;
     }
 

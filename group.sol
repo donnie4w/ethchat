@@ -86,7 +86,7 @@ contract Group is utils {
 
     //是否在群中
     function inGroup(address to, address groupAddress)
-        private
+        internal
         view
         returns (bool)
     {

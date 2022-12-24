@@ -5,7 +5,7 @@ pragma solidity >=0.8.17 <0.9.0;
 import "./user.sol";
 import "./group.sol";
 
-contract Chat is User, Group {
+contract Chat is User {
     //聊天单元
     struct chatunit {
         address from;
@@ -43,7 +43,7 @@ contract Chat is User, Group {
 
     function sendMsg(address to, string calldata content)
         public
-        onlyFriend(to)
+        onlyFriendorInGroup(to)
     {
         uint256 time = block.timestamp;
         writeToChatunit(chatgroup[to], chatunit(msg.sender, content, time, 0));
@@ -54,7 +54,7 @@ contract Chat is User, Group {
         address to,
         uint256 seqId,
         uint64 pageNumber
-    ) public view onlyOwner(to) returns (chatunit[] memory) {
+    ) public view onlyOwnerOrInGroup(to) returns (chatunit[] memory) {
         recvUint storage recv = chatgroup[to];
         uint256 length = pageNumber;
         if (recv.seq - seqId < pageNumber) {
