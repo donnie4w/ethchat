@@ -5,7 +5,7 @@ pragma solidity >=0.8.17 <0.9.0;
 import "./utils.sol";
 
 contract User is utils {
-    uint256 userId;
+    uint256 internal userId;
 
     struct user {
         uint256 index;
@@ -38,9 +38,9 @@ contract User is utils {
         }
     }
 
-    mapping(address => user) internal userMap;
+    mapping(address => user) private userMap;
 
-    mapping(bytes32 => uint8) internal friendMap;
+    mapping(bytes32 => uint8) private friendMap;
 
     event friend(address from, address to);
 

@@ -3,8 +3,9 @@
 
 pragma solidity >=0.8.17 <0.9.0;
 import "./user.sol";
+import "./group.sol";
 
-contract Chat is User {
+contract Chat is User, Group {
     //聊天单元
     struct chatunit {
         address from;
@@ -66,16 +67,5 @@ contract Chat is User {
             }
         }
         return ret;
-    }
-
-    function userInfo(string memory desc, string memory privateDesc)
-        public
-        override
-    {
-        super.userInfo(desc, privateDesc);
-    }
-
-    function addFriend(address to) public override {
-        super.addFriend(to);
     }
 }

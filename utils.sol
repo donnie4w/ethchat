@@ -83,7 +83,7 @@ contract utils {
         return number;
     }
 
-    function newAddress() public view returns (address) {
+    function newAddress() internal view returns (address) {
         return
             address(
                 uint160(

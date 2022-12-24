@@ -6,16 +6,16 @@ pragma solidity >=0.8.17 <0.9.0;
 import "./utils.sol";
 
 contract Group is utils {
-    uint64 index;
+    uint64 internal index;
     struct group {
         uint256 index;
         string info;
         address admin;
     }
 
-    mapping(address => group) groupMap; //group  address => group
+    mapping(address => group) private groupMap; //group  address => group
 
-    mapping(address => address[]) user_groupArray; // msg sender => group[]
+    mapping(address => address[])  private user_groupArray; // msg sender => group[]
 
     //新建群组
     function newGroup(string memory ginfo) public virtual returns (address) {
